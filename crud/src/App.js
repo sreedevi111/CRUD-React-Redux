@@ -69,7 +69,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path = '/' element ={<Home />}/>
-        <Route path = '/addPost' element ={<AddPost />} />
+        <Route path = '/AddPost' element ={<AddPost />} />
       </Routes>
       </BrowserRouter>
       </div>
