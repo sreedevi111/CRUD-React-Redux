@@ -59,11 +59,20 @@
 
 
 import React from 'react'
-import {BrowserRouter, Router, Routes} from 'react-router-dom'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import AddPost from './components/AddPost'
+import Home from './components/Home'
 
 function App() {
   return (
-    <div>App</div>
+    <div className='app'>
+      <BrowserRouter>
+      <Routes>
+        <Route path = '/' element ={<Home />}/>
+        <Route path = '/addPost' element ={<AddPost />} />
+      </Routes>
+      </BrowserRouter>
+      </div>
   )
 }
 
