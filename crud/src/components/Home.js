@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,7 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "../features/postSlice";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import {useNavigate} from 'react-router-dom'
+
+import ModalInFunctionalComponent from "./Modal";
 
 const useButtonStyles = makeStyles((theme) => ({
   root: {
@@ -42,18 +43,6 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const posts = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 const useStyles = makeStyles({
   table: {
     marginTop: 100,
@@ -61,13 +50,30 @@ const useStyles = makeStyles({
   },
 });
 
-function Home({navigation}) {
+function Home({ navigation }) {
   const classes = useStyles();
   const buttonStyles = useButtonStyles();
   let dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { posts } = useSelector((state) => state.post);
+  const [edit, setEdit] = useState(false); // boolean for edit
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [editData, setEditData] = useState({
+    userId: "",
+    id: "",
+    title: "",
+    body: "",
+  });
+  // to display data in edit option
+
+  const setModalIsOpenToTrue = () => {
+    setModalIsOpen(true);
+  };
+  const setModalIsOpenToFalse = () => {
+    setModalIsOpen(false);
+    setEdit(false);
+    setEditData({ userId: "", id: "", title: "", body: "" });
+  };
 
   //API Call
   useEffect(() => {
@@ -76,19 +82,31 @@ function Home({navigation}) {
 
   return (
     <div>
-      <div className= {buttonStyles.root}>
-        <Button variant="contained"
-         color="primary"
-         onClick={()=>{
-            navigate("AddPost")
-            console.log("Check")
-         }
-        }
-        
+      {/* <Modal isOpen={modalIsOpen}>
+                <button onClick={setModalIsOpenToFalse}>x</button>
+                
+            </Modal> */}
+      <div className={buttonStyles.root}>
+        <Button
+          variant="contained"
+          color="primary"
+          //  onClick={()=>{
+          //     navigate("AddPost")
+          //     console.log("Check")
+          //  }
+          onClick={() => {
+            setModalIsOpenToTrue();
+          }}
         >
           Add Post
         </Button>
       </div>
+      <ModalInFunctionalComponent
+        propsModalIsOpen={modalIsOpen}
+        propsSetModalIsOpenToFalse={setModalIsOpenToFalse}
+        editPost={edit}
+        editData={editData} // available data in modal
+      />
 
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="customized table">
@@ -121,10 +139,26 @@ function Home({navigation}) {
                       color="primary"
                       aria-label="contained primary button group"
                     >
-                      <Button style={{ marginRight: "5px" }} color="secondary">
+                      {/* <Button style={{ marginRight: "5px" }} color="secondary">
                         Delete
+                      </Button> */}
+                      <Button
+                        color="primary"
+                        onClick={() => {
+                          setModalIsOpenToTrue();
+                          setEdit(true);
+                          setEditData({
+                            //onClick storing the current data values. Passing the data to model componets as props.
+                            userId: post.userId,
+                            id: post.id,
+                            title: post.title,
+                            body: post.body,
+                          });
+                          console.log("editData");
+                        }}
+                      >
+                        Edit
                       </Button>
-                      <Button color="primary">Edit</Button>
                     </ButtonGroup>
                   </div>
                 </StyledTableCell>

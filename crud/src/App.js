@@ -62,6 +62,7 @@ import React from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import AddPost from './components/AddPost'
 import Home from './components/Home'
+import Form from './components/Form'
 
 function App() {
   return (
@@ -69,7 +70,8 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path = '/' element ={<Home />}/>
-        <Route path = '/AddPost' element ={<AddPost />} />
+        <Route path = '/' element ={<Form />}/>
+        <Route path = '/AddPost' element  ={<AddPost  title="Add Post" />}  />
       </Routes>
       </BrowserRouter>
       </div>
