@@ -65,27 +65,28 @@ const AddPost = (props) => {
         onSubmit={handleSubmit}
       >
         <TextField
-          id="standard-basic"
+          id="userId"
           label="userId"
           name="userId"
           value={userId}
-          type="number"
+          type="text"
           onChange={handleChange}
         />
         <br />
 
         <TextField
-          id="standard-basic"
-          label="Title"
+          id="title"
+          label="title"
           name="title"
+          inputProps={{ "data-testid": "content-input" }}
           value={title}
           type="text"
           onChange={handleChange}
         />
         <br />
         <TextField
-          id="standard-basic"
-          label="Body"
+          id="body"
+          label="body"
           name="body"
           value={body}
           type="text"
