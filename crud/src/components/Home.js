@@ -16,9 +16,10 @@ import ModalInFunctionalComponent from "./Modal";
 
 const useButtonStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    // display: "flex",
+    // flexDirection: "column",
+    // alignItems: "center",
+    // alignContent:'flexEnd',
     "& > *": {
       margin: theme.spacing(1),
     },
@@ -45,18 +46,18 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles({
   table: {
-    marginTop: 100,
+    marginTop: 2,
     minWidth: 900,
   },
 });
 
-function Home({ navigation }) {
+function Home() {
   const classes = useStyles();
   const buttonStyles = useButtonStyles();
   let dispatch = useDispatch();
 
   const { posts } = useSelector((state) => state.post);
-  const [edit, setEdit] = useState(false); // boolean for edit
+  const [edit, setEdit] = useState(false); // boolean for edit =====> editPost
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [editData, setEditData] = useState({
     userId: "",
@@ -80,26 +81,28 @@ function Home({ navigation }) {
     dispatch(getPosts());
   }, []);
 
+  const selector = useSelector((state) => state);
+
   return (
     <div>
-      {/* <Modal isOpen={modalIsOpen}>
-                <button onClick={setModalIsOpenToFalse}>x</button>
-                
-            </Modal> */}
-      <div className={buttonStyles.root}>
+      <p>{selector.loading}</p>
+      
+      <div className={buttonStyles.root} 
+      style={{marginLeft:'1300px'}}
+      >
+        
         <Button
           variant="contained"
           color="primary"
-          //  onClick={()=>{
-          //     navigate("AddPost")
-          //     console.log("Check")
-          //  }
           onClick={() => {
             setModalIsOpenToTrue();
+            setEdit(false);
+
           }}
         >
           Add Post
         </Button>
+        
       </div>
       <ModalInFunctionalComponent
         propsModalIsOpen={modalIsOpen}
@@ -139,11 +142,9 @@ function Home({ navigation }) {
                       color="primary"
                       aria-label="contained primary button group"
                     >
-                      {/* <Button style={{ marginRight: "5px" }} color="secondary">
-                        Delete
-                      </Button> */}
+                     
                       <Button
-                        color="primary"
+                        color="secondary"
                         onClick={() => {
                           setModalIsOpenToTrue();
                           setEdit(true);

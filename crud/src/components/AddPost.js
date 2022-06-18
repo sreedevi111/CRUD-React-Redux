@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { createPosts } from "../features/postSlice";
+import { createPosts, editPosts } from "../features/postSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: 100,
+    marginTop: 30,
     "& > *": {
       margin: theme.spacing(1),
       width: "45ch",
@@ -17,28 +17,24 @@ const useStyles = makeStyles((theme) => ({
 
 const AddPost = (props) => {
   const editData = props.editData;
+  let editPost = props.editPost;
+ 
   const classes = useStyles();
   const [state, setState] = useState(
     editData
-      ? { userId: editData.userId, title: editData.title, body: editData.body }
+      ? {  id: editData.id , userId:  editData.userId, title: editData.title, body: editData.body }
       : {
-          userId: "",
+        id:"",
+        userId: "",
           title: "",
           body: "",
         }
   );
   let dispatch = useDispatch();
-  const [error, setError] = useState("");
-  const { userId, title, body } = state;
+  const {id, userId, title, body } = state;
 
-  useEffect(() => {
-    dispatch(createPosts());
-  }, []);
-
+  
   const handleChange = (e) => {
-    // let name = e.target.name
-    // let value = e.target.value
-    //  let bodyParam = {userId, title, body};
     let { name, value } = e.target;
     setState({ ...state, [name]: value });
   };
@@ -47,22 +43,22 @@ const AddPost = (props) => {
     e.preventDefault();
 
     if (!userId || !title || !body) {
-      setError("Please fill all the fields");
-      console.log("ERROR");
+      alert("Please fill all the fields");
     } else {
-      let bodyParam = { userId, title, body };
+      let postParam = {userId, title, body};
+      let bodyParam = {id, userId, title, body };
 
       console.log(bodyParam);
-      dispatch(createPosts(bodyParam));
+    editPost?  dispatch(editPosts(bodyParam)): dispatch(createPosts(postParam)); //HERE IS THE
+     
     }
   };
 
-  let editPost = props.editPost;
-
   return (
     <div>
-      <h1>{editPost ? "Edit Post" : "Add Post"}</h1>
+      <h1 style={{textAlign:'center'}}>{editPost ? "Edit Post" : "Add Post"}</h1>
       <form
+      style={{display:"flex", alignItems:'center', flexDirection:'column'}}
         className={classes.root}
         noValidate
         autoComplete="off"
@@ -102,9 +98,11 @@ const AddPost = (props) => {
           variant="contained"
           color="primary"
           type="submit"
+          // onClick={onSubmitClick()}
         >
           Submit
         </Button>
+       
       </form>
     </div>
   );
