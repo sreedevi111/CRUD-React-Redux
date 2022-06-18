@@ -26,4 +26,6 @@ $ npm start
 ```
 ## Demo
 
-![gif](https://user-images.githubusercontent.com/72161804/174423931-3e5ffe59-148e-4c86-8d85-4beba88af4ef.gif)
+![gif ](https://user-images.githubusercontent.com/72161804/174423931-3e5ffe59-148e-4c86-8d85-4beba88af4ef.gif)
+<!-- <video src='https://gifs.com/gif/crud-oZ9GoA' width=180/> -->
+
