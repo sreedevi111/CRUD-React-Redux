@@ -16,10 +16,6 @@ import ModalInFunctionalComponent from "./Modal";
 
 const useButtonStyles = makeStyles((theme) => ({
   root: {
-    // display: "flex",
-    // flexDirection: "column",
-    // alignItems: "center",
-    // alignContent:'flexEnd',
     "& > *": {
       margin: theme.spacing(1),
     },

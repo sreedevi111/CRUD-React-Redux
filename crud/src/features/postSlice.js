@@ -76,16 +76,6 @@ const postSlice = createSlice({
       [editPosts.rejected]: (state, action) => {
         state.loading = false;
       },
-
-
-    // updatePosts: (state, action) => {
-    //   state.value.map((user) => {
-    //     if (user.id === action.payload.id) {
-    //       user.username = action.payload.username;
-    //     }
-    //     return user;
-    //   });
-    // },
   },
 });
 

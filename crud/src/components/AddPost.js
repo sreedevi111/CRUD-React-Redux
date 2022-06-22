@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -18,22 +18,26 @@ const useStyles = makeStyles((theme) => ({
 const AddPost = (props) => {
   const editData = props.editData;
   let editPost = props.editPost;
- 
+
   const classes = useStyles();
   const [state, setState] = useState(
     editData
-      ? {  id: editData.id , userId:  editData.userId, title: editData.title, body: editData.body }
+      ? {
+          id: editData.id,
+          userId: editData.userId,
+          title: editData.title,
+          body: editData.body,
+        }
       : {
-        id:"",
-        userId: "",
+          id: "",
+          userId: "",
           title: "",
           body: "",
         }
   );
   let dispatch = useDispatch();
-  const {id, userId, title, body } = state;
+  const { id, userId, title, body } = state;
 
-  
   const handleChange = (e) => {
     let { name, value } = e.target;
     setState({ ...state, [name]: value });
@@ -45,20 +49,27 @@ const AddPost = (props) => {
     if (!userId || !title || !body) {
       alert("Please fill all the fields");
     } else {
-      let postParam = {userId, title, body};
-      let bodyParam = {id, userId, title, body };
+      let postParam = { userId, title, body };
+      let bodyParam = { id, userId, title, body };
 
       console.log(bodyParam);
-    editPost?  dispatch(editPosts(bodyParam)): dispatch(createPosts(postParam)); //HERE IS THE
-     
+      editPost
+        ? dispatch(editPosts(bodyParam))
+        : dispatch(createPosts(postParam));
     }
   };
 
   return (
     <div>
-      <h1 style={{textAlign:'center'}}>{editPost ? "Edit Post" : "Add Post"}</h1>
+      <h1 style={{ textAlign: "center" }}>
+        {editPost ? "Edit Post" : "Add Post"}
+      </h1>
       <form
-      style={{display:"flex", alignItems:'center', flexDirection:'column'}}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
         className={classes.root}
         noValidate
         autoComplete="off"
@@ -99,11 +110,9 @@ const AddPost = (props) => {
           variant="contained"
           color="primary"
           type="submit"
-          // onClick={onSubmitClick()}
         >
           Submit
         </Button>
-       
       </form>
     </div>
   );
