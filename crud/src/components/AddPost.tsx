@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { createPosts, editPosts } from "../features/postSlice";
+import { AppDispatch } from "../app/store";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,7 +17,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddPost = (props) => {
+type BodyParamType = {
+  id: number;
+  userId: number;
+  title: string;
+  body: string;
+}
+
+const AddPost = (props: { editData: any; editPost: boolean; }) => {
   const editData = props.editData;
   let editPost = props.editPost;
 
@@ -35,22 +44,23 @@ const AddPost = (props) => {
           body: "",
         }
   );
-  let dispatch = useDispatch();
+  let dispatch = useDispatch<AppDispatch>();
+
   const { id, userId, title, body } = state;
 
-  const handleChange = (e) => {
+  const handleChange = (e: { target: { name: any; value: any; }; }) => {
     let { name, value } = e.target;
     setState({ ...state, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     if (!userId || !title || !body) {
       alert("Please fill all the fields");
     } else {
       let postParam = { userId, title, body };
-      let bodyParam = { id, userId, title, body };
+      let bodyParam : BodyParamType = { id, userId, title, body };
 
       console.log(bodyParam);
       editPost
