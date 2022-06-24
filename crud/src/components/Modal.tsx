@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
+import Post from "../models/post";
 import AddPost from "./AddPost";
 
 function ModalInFunctionalComponent({
@@ -11,7 +12,7 @@ function ModalInFunctionalComponent({
   isOpen: boolean;
   setModalIsOpenToFalse: (e: React.MouseEvent<HTMLElement>) => void;
   editPost: boolean;
-  editData: string;
+  editData: Post;
 }) {
   return (
     <div>
